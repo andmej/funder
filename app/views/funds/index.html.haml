@@ -1,0 +1,10 @@
+%table
+  %tr
+    %th Ticker
+    %th Razão Social
+    %th Nome de Pregão
+  - @funds.each do |fund|
+    %tr
+      %td= fund.ticker
+      %td= link_to fund.corporate_name, fund
+      %td= fund.trading_name
