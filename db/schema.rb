@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130811210214) do
+ActiveRecord::Schema.define(version: 20130811224122) do
+
+  create_table "documents", force: true do |t|
+    t.string   "title"
+    t.datetime "published_at"
+    t.integer  "asset_id"
+    t.string   "asset_type"
+    t.string   "category"
+    t.string   "original_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "funds", force: true do |t|
     t.string   "trading_name"

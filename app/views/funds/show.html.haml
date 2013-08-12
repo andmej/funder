@@ -1,0 +1,21 @@
+%h1= [@fund.ticker.presence, @fund.trading_name].compact.join(" - ")
+%h4= @fund.corporate_name
+
+%table.table.table-striped.sortable
+  %thead
+    %tr
+      %th Mês
+      %th Rendimentos distribuidos por cota
+      %th Comunicados
+  %tbody
+    - each_covered_month @communications.map(&:published_at) do |first_day, last_day|
+      %tr
+        %td= first_day.strftime("%B %Y")
+        %td
+        %td
+          %ul
+          - @communications.published_after(first_day).published_before(last_day).each do |doc|
+            %li
+              = doc.published_at.strftime("%d/%m/%Y: ")
+              = link_to doc.title, doc.original_url
+

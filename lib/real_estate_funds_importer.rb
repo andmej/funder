@@ -8,7 +8,7 @@ class RealEstateFundsImporter < Mechanize
       razao_social_link = tr.search("td")[0].search("a").first
       nome_de_pregao_link = tr.search("td")[1].search("a").first
       # segmento is column 2. I don't need it.
-      # código is column 3. It's incomplete here (FLRP instead of FLRP11B) so I will get it later.
+      # código is column 3. It's an incomplete ticker (FLRP instead of FLRP11B) so I will get it later.
       
       fund = Fund.where(trading_name: nome_de_pregao_link.text,
                         corporate_name: razao_social_link.text).first_or_initialize
@@ -25,8 +25,9 @@ class RealEstateFundsImporter < Mechanize
     puts "Processing '#{fund.trading_name}'..."
     # Link points to: 
     # http://www.bmfbovespa.com.br/Fundos-Listados/FundosListadosDetalhe.aspx?Sigla=AEFI&tipoFundo=Imobiliario&aba=abaPrincipal&idioma=pt-br
-    
-    get_ticker(fund, link.clone)
+
+    get_ticker(fund, link)
+    get_documents(fund, link)
   end
 
   def get_ticker(fund, link)
@@ -43,4 +44,41 @@ class RealEstateFundsImporter < Mechanize
       puts "    Ticker: #{fund.ticker}"
     end    
   end
+
+  def get_documents(fund, link)
+    get_comunicados(fund, link)
+  end
+
+  def get_comunicados(fund, link)
+    link = link.clone
+    # comunicados
+    link["href"] = link["href"].gsub("abaPrincipal", "subAbaDocumento") # gsub! doesn't work for some reason.
+
+    transact do
+      click link
+      (page.search("#tbArqListados tr")[1..-1] || []).each do |tr|
+
+        title = tr.search("td")[0].search("a").first.text.strip
+        original_url = tr.search("td")[0].search("a").first.attr("href").strip
+        published_at = Time.zone.parse(tr.search("td")[1].text.strip)
+
+        document = fund.documents.where(original_url: original_url).first_or_initialize
+        document.title = title
+        document.published_at = published_at
+        document.category = "Comunicados"
+
+        puts "    Saving document:"
+        print_document(document)
+
+        document.save!
+      end
+    end
+  end
+
+  def print_document(doc)
+    doc.attributes.each do |name, value|
+      puts "        #{name}: #{value}"
+    end
+  end
+
 end
