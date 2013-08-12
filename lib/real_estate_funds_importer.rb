@@ -63,12 +63,7 @@ class RealEstateFundsImporter < Mechanize
         original_url = doc_link[:href].strip
         published_at = Time.zone.parse(tr.search("td")[1].text.strip)
 
-        puts original_url
-
-        document = fund.documents.where(original_url: original_url).first_or_initialize
-
-        puts document.original_url
-
+        document = fund.documents.find_by(original_url: original_url) || fund.documents.new(original_url: original_url)
         document.title = title
         document.published_at = published_at
         document.category = "Comunicados"
