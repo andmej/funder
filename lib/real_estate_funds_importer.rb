@@ -66,6 +66,7 @@ class RealEstateFundsImporter < Mechanize
         document.title = title
         document.published_at = published_at
         document.category = "Comunicados"
+        document.convert_to_plain_text unless document.plain_text.present?
 
         puts "    Saving document:"
         print_document(document)
@@ -76,7 +77,7 @@ class RealEstateFundsImporter < Mechanize
   end
 
   def print_document(doc)
-    doc.attributes.each do |name, value|
+    doc.attributes.slice("title", "category", "original_url").each do |name, value|
       puts "        #{name}: #{value}"
     end
   end

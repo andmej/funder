@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130811224122) do
+ActiveRecord::Schema.define(version: 20130812025643) do
 
   create_table "documents", force: true do |t|
     t.string   "title"
@@ -22,6 +22,7 @@ ActiveRecord::Schema.define(version: 20130811224122) do
     t.string   "original_url"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "plain_text"
   end
 
   create_table "funds", force: true do |t|

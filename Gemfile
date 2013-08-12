@@ -33,6 +33,7 @@ gem 'jbuilder', '~> 1.2'
 gem 'mechanize', '~> 2.7.1'
 gem 'haml'
 gem 'bootstrap-sass', '~> 2.3.2.1'
+gem 'pdf-reader'
 
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.

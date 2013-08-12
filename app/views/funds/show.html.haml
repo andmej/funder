@@ -17,5 +17,5 @@
           - @communications.published_after(first_day).published_before(last_day).each do |doc|
             %li
               = doc.published_at.strftime("%d/%m/%Y: ")
-              = link_to doc.title, doc.original_url
-
+              = doc.title
+              = "(#{[link_to("pdf", doc.original_url), doc.plain_text? ? link_to("txt", document_path(doc, format: :txt)) : nil].compact.join(", ")})".html_safe
