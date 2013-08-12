@@ -8,6 +8,7 @@ class Document < ActiveRecord::Base
   scope :published_after, ->(date) { where(arel_table[:published_at].gteq(date)) }
 
   def convert_to_plain_text
+    raise "Set original_url before calling convert_to_plain_text" if original_url.blank?
     io = open(original_url, "rb")
     reader = PDF::Reader.new(io)
     self.plain_text = reader.pages.map(&:text).join("\n")
