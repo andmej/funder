@@ -52,24 +52,23 @@ class RealEstateFundsImporter < Mechanize
   def get_comunicados(fund, link)
     link = link.clone
     # comunicados
-    link["href"] = link["href"].gsub("abaPrincipal", "subAbaDocumento") # gsub! doesn't work for some reason.
+    link[:href] = link[:href].gsub("abaPrincipal", "subAbaDocumento") # gsub! doesn't work for some reason.
 
     transact do
       click link
       (page.search("#tbArqListados tr")[1..-1] || []).each do |tr|
 
-        puts tr.to_html
         doc_link = tr.search("td")[0].search("a").first
-        puts doc_link.to_html
-        puts doc_link.text
-        puts doc_link["href"]
-        puts doc_link[:href]
-
         title = doc_link.text.strip
-        original_url = doc_link["href"].strip
+        original_url = doc_link[:href].strip
         published_at = Time.zone.parse(tr.search("td")[1].text.strip)
 
+        puts original_url
+
         document = fund.documents.where(original_url: original_url).first_or_initialize
+
+        puts document.original_url
+
         document.title = title
         document.published_at = published_at
         document.category = "Comunicados"
