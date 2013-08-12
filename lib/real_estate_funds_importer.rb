@@ -74,7 +74,7 @@ class RealEstateFundsImporter < Mechanize
         if document.plain_text.blank?
           begin
             document.convert_to_plain_text
-          rescue PDF::Reader::MalformedPDFError => e
+          rescue Exception => e
             puts "ERROR: PDF #{original_url} is malformed. Exception rescued:"
             puts "       #{e.class}: #{e.message}."
             puts "       Ignoring."
