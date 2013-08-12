@@ -66,10 +66,11 @@ class RealEstateFundsImporter < Mechanize
         document.title = title
         document.published_at = published_at
         document.category = "Comunicados"
-        document.convert_to_plain_text unless document.plain_text.present?
 
         puts "    Saving document:"
         print_document(document)
+
+        document.convert_to_plain_text unless document.plain_text.present?
 
         document.save!
       end
