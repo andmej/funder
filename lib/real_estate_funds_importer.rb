@@ -59,9 +59,14 @@ class RealEstateFundsImporter < Mechanize
       (page.search("#tbArqListados tr")[1..-1] || []).each do |tr|
 
         puts tr.to_html
+        doc_link = tr.search("td")[0].search("a").first
+        puts doc_link.to_html
+        puts doc_link.text
+        puts doc_link["href"]
+        puts doc_link[:href]
 
-        title = tr.search("td")[0].search("a").first.text.strip
-        original_url = tr.search("td")[0].search("a").first["href"].strip
+        title = doc_link.text.strip
+        original_url = doc_link["href"].strip
         published_at = Time.zone.parse(tr.search("td")[1].text.strip)
 
         document = fund.documents.where(original_url: original_url).first_or_initialize
