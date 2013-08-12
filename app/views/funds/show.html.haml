@@ -10,7 +10,7 @@
   %tbody
     - each_covered_month @communications.map(&:published_at) do |first_day, last_day|
       %tr
-        %td= first_day.strftime("%B %Y")
+        %td=l first_day, format: "%B %Y"
         %td
         %td
           %ul
