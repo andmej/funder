@@ -14,6 +14,9 @@
       %tr
         %td=l first_day, format: "%B %Y"
         %td
+          - @fund.dividends.last_day_after(first_day).last_day_before(last_day).each do |dividend|
+            R$
+            = dividend.amount
         %td
           %ul
           - @communications.published_after(first_day).published_before(last_day).each do |doc|

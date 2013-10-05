@@ -1,5 +1,6 @@
 class RealEstateFundsImporter < Mechanize
 
+  # Downloads documents from Bovespa's site.
   def import
     get("http://www.bmfbovespa.com.br/Fundos-Listados/FundosListados.aspx?tipoFundo=imobiliario&Idioma=pt-br")
 

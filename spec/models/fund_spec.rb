@@ -5,4 +5,5 @@ describe Fund do
   it { should validate_presence_of(:corporate_name) }
   it { should validate_presence_of(:bovespa_url) }
   it { should have_many(:documents) }
+  it { should have_many(:dividends) }
 end
