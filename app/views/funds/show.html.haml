@@ -1,6 +1,8 @@
 %h1= [@fund.ticker.presence, @fund.trading_name].compact.join(" - ")
 %h4= @fund.corporate_name
 
+%p= link_to "Ver no site da Bovespa", @fund.bovespa_url
+
 %table.table.table-striped.sortable
   %thead
     %tr

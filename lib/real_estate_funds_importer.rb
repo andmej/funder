@@ -9,7 +9,7 @@ class RealEstateFundsImporter < Mechanize
       nome_de_pregao_link = tr.search("td")[1].search("a").first
       # segmento is column 2. I don't need it.
       # código is column 3. It's an incomplete ticker (FLRP instead of FLRP11B) so I will get it later.
-      
+
       fund = Fund.where(trading_name: nome_de_pregao_link.text,
                         corporate_name: razao_social_link.text).first_or_initialize
 
@@ -23,7 +23,7 @@ class RealEstateFundsImporter < Mechanize
 
   def import_fund(fund, link)
     puts "Processing '#{fund.trading_name}'..."
-    # Link points to: 
+    # Link points to:
     # http://www.bmfbovespa.com.br/Fundos-Listados/FundosListadosDetalhe.aspx?Sigla=AEFI&tipoFundo=Imobiliario&aba=abaPrincipal&idioma=pt-br
 
     get_ticker(fund, link)
@@ -42,7 +42,7 @@ class RealEstateFundsImporter < Mechanize
         puts "         '#{fund.ticker}' will be used."
       end
       puts "    Ticker: #{fund.ticker}"
-    end    
+    end
   end
 
   def get_documents(fund, link)
@@ -53,6 +53,7 @@ class RealEstateFundsImporter < Mechanize
     link = link.clone
     # comunicados
     link[:href] = link[:href].gsub("abaPrincipal", "subAbaDocumento") # gsub! doesn't work for some reason.
+    fund.bovespa_url = "http://www.bmfbovespa.com.br/Fundos-Listados/" + link[:href]
 
     transact do
       click link
