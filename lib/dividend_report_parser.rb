@@ -39,13 +39,16 @@ class DividendReportParser
 
   def get_amount
     if @content =~ /no valor de R\$ ([0-9,\.]+) por cota/
-      return parse_number($1)
+      return parse_number $1
     end
   end
 
   def get_last_day
     if @content =~ /com base na posição de cotistas de ([0-9]+\/[0-9]+\/[0-9]+)/
-      return parse_date($1)
+      return parse_date $1
+    end
+    if @content =~ /aos titulares de cotas em ([0-9]+\/[0-9]+\/[0-9]+)/
+      return parse_date $1
     end
   end
 
