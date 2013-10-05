@@ -41,6 +41,9 @@ class DividendReportParser
     if @content =~ /no valor de R\$ ([0-9,\.]+) por cota/
       return parse_number $1
     end
+    if @content =~ /no valor de R\$ R\$ ([0-9,\.]+) por cota/ # WTF. Stupid bankers.
+      return parse_number $1
+    end
   end
 
   def get_last_day

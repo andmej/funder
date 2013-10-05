@@ -12,6 +12,7 @@ describe DividendReportParser do
     it "extracts the correct values" do
       compare("1.txt", nil, {amount: 0.62829442, last_day: Date.parse("September 30, 2013")})
       compare("2.txt", nil, {amount: 0.75, last_day: Date.parse("September 23, 2013")})
+      compare("3.txt", nil, {amount: 0.720732334, last_day: Date.parse("May 31, 2013")})
     end
   end
 end
