@@ -5,4 +5,8 @@ class DocumentsController < ApplicationController
       format.text { render text: @document.plain_text }
     end
   end
+
+  def whats_new
+    @documents = Document.order(created_at: :desc).limit(10)
+  end
 end
