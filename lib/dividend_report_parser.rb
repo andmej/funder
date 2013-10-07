@@ -38,10 +38,19 @@ class DividendReportParser
   private
 
   def get_amount
-    if @content =~ /no valor de R\$ ([0-9,\.]+) por cota/
+    if @content =~ /no valor de R\$\s?([0-9,\.]+) por cota/
       return parse_number $1
     end
     if @content =~ /no valor de R\$ R\$ ([0-9,\.]+) por cota/ # WTF. Stupid bankers.
+      return parse_number $1
+    end
+    if @content =~ /no valor bruto de R\$\s?([0-9,\.]+) por cota/
+      return parse_number $1
+    end
+    if @content =~ /- Valor do rendimento por cota: R\$\s?([0-9,\.]+)/
+      return parse_number $1
+    end
+    if @content =~ /corresponde a R\$\s?([0-9,\.]+) por cota/
       return parse_number $1
     end
   end
@@ -51,6 +60,15 @@ class DividendReportParser
       return parse_date $1
     end
     if @content =~ /aos titulares de cotas em ([0-9]+\/[0-9]+\/[0-9]+)/
+      return parse_date $1
+    end
+    if @content =~ /aos cotistas com posição até ([0-9]+\/[0-9]+\/[0-9]+)/
+      return parse_date $1
+    end
+    if @content =~ /- Data base: ([0-9]+\/[0-9]+\/[0-9]+)/
+      return parse_date $1
+    end
+    if @content =~ /aos detentores de cotas em ([0-9]+\/[0-9]+\/[0-9]+)/
       return parse_date $1
     end
   end
