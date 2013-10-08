@@ -59,6 +59,9 @@ class DividendReportParser
     if @content =~ /Valor distribuído por cota: R\$\s?([0-9,\.]+)/
       return parse_number $1
     end
+    if @content =~ /Valor bruto distribuído por cota: R\$\s?([0-9,\.]+)/
+      return parse_number $1
+    end
     if @content =~ /corresponde a R\$\s?([0-9,\.]+) \([^0-9]+ reais e [^0-9]+ centavos\) por quota/
       return parse_number $1
     end
@@ -86,6 +89,9 @@ class DividendReportParser
     if @content =~ /Data Base: ([0-9]+\/[0-9]+\/[0-9]+)/
       return parse_date $1
     end
+    if @content =~ /A partir de ([0-9]+\/[0-9]+\/[0-9]+) cotas ex-rendimento/i
+      return previous_business_day parse_date $1
+    end
   end
 
   def parse_number(text)
@@ -94,5 +100,13 @@ class DividendReportParser
 
   def parse_date(text)
     Date.parse(text.strip)
+  end
+
+  def previous_business_day(date)
+    date = date - 1.day
+    while [0, 6].include? date.wday
+      date = date - 1.day
+    end
+    date
   end
 end

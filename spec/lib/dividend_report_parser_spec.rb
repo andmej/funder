@@ -21,6 +21,8 @@ describe DividendReportParser do
       compare("9.txt", nil, {amount: 30.13959246154, last_day: Date.parse("September 30, 2013")})
       compare("10.txt", nil, {amount: 12.50, last_day: Date.parse("January 31, 2012")})
       compare("11.txt", nil, {amount: 1.00352859, last_day: Date.parse("September 19, 2013")})
+      compare("12.txt", nil, {amount: 118.99688715, last_day: Date.parse("July 25, 2013")})
+
     end
   end
 end
