@@ -4,9 +4,16 @@
       %th Ticker
       %th Razão Social
       %th Nome de Pregão
+      %th Meses com rendimento
   %tbody
     - @funds.each do |fund|
       %tr
         %td= fund.ticker
         %td= link_to fund.corporate_name, fund
         %td= fund.trading_name
+        %td
+          - if fund.months_of_existence.present?
+            = (100.0 * fund.months_with_dividends / fund.months_of_existence).round(2).to_s + "%"
+            = "(#{fund.months_with_dividends}/#{fund.months_of_existence})"
+          - else
+            Sem dados

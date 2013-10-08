@@ -1,6 +1,6 @@
 class FundsController < ApplicationController
   def index
-    @funds = Fund.order(corporate_name: :asc)
+    @funds = Fund.order(corporate_name: :asc).includes(:dividends, :documents)
   end
 
   def show
