@@ -50,6 +50,9 @@ class DividendReportParser
     if @content =~ /- Valor do rendimento por cota: R\$\s?([0-9,\.]+)/
       return parse_number $1
     end
+    if @content =~ /- Valor do rendimento: R\$\s?([0-9,\.]+)/
+      return parse_number $1
+    end
     if @content =~ /corresponde a R\$\s?([0-9,\.]+) por cota/
       return parse_number $1
     end
@@ -71,10 +74,13 @@ class DividendReportParser
     if @content =~ /aos cotistas com posição até ([0-9]+\/[0-9]+\/[0-9]+)/
       return parse_date $1
     end
+    if @content =~ /aos detentores de cotas em ([0-9]+\/[0-9]+\/[0-9]+)/
+      return parse_date $1
+    end
     if @content =~ /- Data base: ([0-9]+\/[0-9]+\/[0-9]+)/
       return parse_date $1
     end
-    if @content =~ /aos detentores de cotas em ([0-9]+\/[0-9]+\/[0-9]+)/
+    if @content =~ /- Data-base: ([0-9]+\/[0-9]+\/[0-9]+)/
       return parse_date $1
     end
     if @content =~ /Data Base: ([0-9]+\/[0-9]+\/[0-9]+)/
