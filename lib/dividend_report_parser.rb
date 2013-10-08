@@ -53,6 +53,12 @@ class DividendReportParser
     if @content =~ /corresponde a R\$\s?([0-9,\.]+) por cota/
       return parse_number $1
     end
+    if @content =~ /Valor distribuído por cota: R\$\s?([0-9,\.]+)/
+      return parse_number $1
+    end
+    if @content =~ /corresponde a R\$\s?([0-9,\.]+) \([^0-9]+ reais e [^0-9]+ centavos\) por quota/
+      return parse_number $1
+    end
   end
 
   def get_last_day
@@ -69,6 +75,9 @@ class DividendReportParser
       return parse_date $1
     end
     if @content =~ /aos detentores de cotas em ([0-9]+\/[0-9]+\/[0-9]+)/
+      return parse_date $1
+    end
+    if @content =~ /Data Base: ([0-9]+\/[0-9]+\/[0-9]+)/
       return parse_date $1
     end
   end
