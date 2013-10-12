@@ -65,6 +65,9 @@ class DividendReportParser
     if @content =~ /corresponde a R\$\s?([0-9,\.]+) \([^0-9]+ reais e [^0-9]+ centavos\) por quota/
       return parse_number $1
     end
+    if @content =~ /valor do rendimento equivale a R\$\s?([0-9,\.]+) por cota/
+      return parse_number $1
+    end
   end
 
   def get_last_day
