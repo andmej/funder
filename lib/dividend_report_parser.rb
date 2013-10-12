@@ -44,6 +44,9 @@ class DividendReportParser
     if @content =~ /no valor de R\$ R\$ ([0-9,\.]+) por cota/ # WTF. Stupid bankers.
       return parse_number $1
     end
+    if @content =~ /no valor de R\$\s?([0-9,\.]+)\s?\/\s?cota/
+      return parse_number $1
+    end
     if @content =~ /no valor bruto de R\$\s?([0-9,\.]+) por cota/
       return parse_number $1
     end
