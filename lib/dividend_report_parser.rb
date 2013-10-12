@@ -101,6 +101,9 @@ class DividendReportParser
     if @content =~ /A partir de ([0-9]+\/[0-9]+\/[0-9]+),? cotas ex-rendimento/i
       return previous_business_day parse_date $1
     end
+    if @content =~ /Desde ([0-9]+\/[0-9]+\/[0-9]+),? cotas ex-rendimento/i
+      return previous_business_day parse_date $1
+    end
   end
 
   def parse_number(text)
