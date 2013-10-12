@@ -56,6 +56,9 @@ class DividendReportParser
     if @content =~ /corresponde a R\$\s?([0-9,\.]+) por cota/
       return parse_number $1
     end
+    if @content =~ /é de R\$\s?([0-9,\.]+) por cota/
+      return parse_number $1
+    end
     if @content =~ /Valor distribuído por cota: R\$\s?([0-9,\.]+)/
       return parse_number $1
     end
