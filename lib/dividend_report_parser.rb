@@ -47,16 +47,19 @@ class DividendReportParser
     if @content =~ /no valor bruto de R\$\s?([0-9,\.]+) por cota/
       return parse_number $1
     end
-    if @content =~ /- Valor do rendimento por cota: R\$\s?([0-9,\.]+)/
+    if @content =~ /Valor do rendimento por cota: R\$\s?([0-9,\.]+)/i
       return parse_number $1
     end
-    if @content =~ /- Valor do rendimento: R\$\s?([0-9,\.]+)/
+    if @content =~ /Valor do rendimento: R\$\s?([0-9,\.]+)/i
       return parse_number $1
     end
     if @content =~ /corresponde a R\$\s?([0-9,\.]+) por cota/
       return parse_number $1
     end
     if @content =~ /é de R\$\s?([0-9,\.]+) por cota/
+      return parse_number $1
+    end
+    if @content =~ /foi de R\$\s?([0-9,\.]+) por cota/
       return parse_number $1
     end
     if @content =~ /Valor distribuído por cota: R\$\s?([0-9,\.]+)/
@@ -95,7 +98,7 @@ class DividendReportParser
     if @content =~ /Data Base: ([0-9]+\/[0-9]+\/[0-9]+)/
       return parse_date $1
     end
-    if @content =~ /A partir de ([0-9]+\/[0-9]+\/[0-9]+) cotas ex-rendimento/i
+    if @content =~ /A partir de ([0-9]+\/[0-9]+\/[0-9]+),? cotas ex-rendimento/i
       return previous_business_day parse_date $1
     end
   end
