@@ -5,6 +5,7 @@
       %th Razão Social
       %th Nome de Pregão
       %th Meses com rendimento
+      %th Documentos com rendimento
   %tbody
     - @funds.each do |fund|
       %tr
@@ -15,5 +16,11 @@
           - if fund.months_of_existence.present?
             = (100.0 * fund.months_with_dividends / fund.months_of_existence).round(2).to_s + "%"
             = "(#{fund.months_with_dividends}/#{fund.months_of_existence})"
+          - else
+            Sem dados
+        %td
+          - if fund.documents.size > 0
+            = (100.0 * fund.months_with_dividends / fund.documents.size).round(2).to_s + "%"
+            = "(#{fund.months_with_dividends}/#{fund.documents.size})"
           - else
             Sem dados
